@@ -55,7 +55,7 @@ pub mod glaucoin_contract {
             authority: ctx.accounts.authority.to_account_info(),
         };
         let cpi_program = ctx.accounts.token_program.to_account_info();
-        let cpi_ctx = CpiContext::new(cpi_program, cpi_accounts);
+        let cpi_ctx = CpiContext::new(cpi_program.clone(), cpi_accounts);
         token::transfer(cpi_ctx, release_amount)?;
 
         Ok(())
@@ -83,7 +83,7 @@ pub mod glaucoin_contract {
             authority: ctx.accounts.authority.to_account_info(),
         };
         let cpi_program = ctx.accounts.token_program.to_account_info();
-        let cpi_ctx_transfer = CpiContext::new(cpi_program, cpi_accounts_transfer);
+        let cpi_ctx_transfer = CpiContext::new(cpi_program.clone(), cpi_accounts_transfer);
         token::transfer(cpi_ctx_transfer, net_amount)?;
 
         // Transfere a comissão para a conta do criador do contrato
@@ -92,7 +92,7 @@ pub mod glaucoin_contract {
             to: commission_account.to_account_info(),
             authority: ctx.accounts.authority.to_account_info(),
         };
-        let cpi_ctx_commission = CpiContext::new(cpi_program, cpi_accounts_commission);
+        let cpi_ctx_commission = CpiContext::new(cpi_program.clone(), cpi_accounts_commission);
         token::transfer(cpi_ctx_commission, commission)?;
 
         Ok(())
